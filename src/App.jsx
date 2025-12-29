@@ -2,16 +2,22 @@ import "./App.css";
 import ContactForm from "./components/ContactForm/ContactForm";
 import SearchBox from "./components/SearchBox/SearchBox";
 import ContactList from "./components/ContactList/ContactList";
-import { useSelector } from "react-redux";
-import { getContacts } from "./redux/selectors";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchContacts } from "./redux/contactsOps";
 
 function App() {
-  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   return (
     <div>
       <h1>Phonebook</h1>
       <ContactForm />
-      {contacts.length > 0 && <SearchBox />}
+      <SearchBox />
       <ContactList />
     </div>
   );
